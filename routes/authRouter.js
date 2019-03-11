@@ -1,13 +1,13 @@
 //Dependencies
-const router = require('express').Router(),
-  bcrypt = require('bcrypt');
+const router = require("express").Router(),
+  bcrypt = require("bcrypt");
 
 //Custom Middleware
-const generateToken = require('../Auth/token-service');
-const Users = require('../users/user-model');
+const generateToken = require("../Auth/token-service");
+const Users = require("../helpers/user-model");
 
 //Routes
-router.post('/register', (req, res) => {
+router.post("/register", (req, res) => {
   let user = req.body;
   const hash = bcrypt.hashSync(user.password, 10);
 
@@ -18,7 +18,7 @@ router.post('/register', (req, res) => {
     })
     .catch(err => res.status(500).json(err));
 });
-router.post('/login', (req, res) => {
+router.post("/login", (req, res) => {
   let { username, password } = req.body;
   Users.findBy({ username })
     .first()
@@ -26,12 +26,12 @@ router.post('/login', (req, res) => {
       if (user && bcrypt.compareSync(password, user.password)) {
         const token = generateToken(user);
         res.status(200).json({
-          message: 'Welcome!',
+          message: "Welcome!",
           token,
-          roles: token.roles,
+          roles: token.roles
         });
       } else {
-        res.status(401).json({ message: 'Invalid Credentials' });
+        res.status(401).json({ message: "Invalid Credentials" });
       }
     });
 });
