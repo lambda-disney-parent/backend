@@ -11,7 +11,10 @@ exports.up = function(knex) {
     })
     .createTable("posts", function(posts) {
       posts.increments();
-      posts.text("text").notNullable();
+      posts.string("title").notNullable();
+      posts.string("meetingPlace").notNullable();
+      posts.string("time").notNullable();
+      posts.integer("numOfKids").notNullable();
 
       posts
         .integer("user_id")
