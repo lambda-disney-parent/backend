@@ -21,10 +21,30 @@ exports.up = function(knex) {
         .unsigned()
         .notNullable()
         .references("id")
-        .inTable("users");
+        .inTable("users")
+        .onDelete("CASCADE")
+        .onUpdate("CASCADE");
+      posts.timestamps(true, true);
+    })
+    .createTable("commentSection", function(comments) {
+      comments.increments();
+      comments.string("comment");
+      comments.string("repliedBy");
+      comments
+        .integer("post_id")
+        .unsigned()
+        .notNullable()
+        .references("id")
+        .inTable("posts")
+        .onDelete("CASCADE")
+        .onUpdate("CASCADE");
+      comments.timestamps(true, true);
     });
 };
 
 exports.down = function(knex, Promise) {
-  return knex.schema.dropTableIfExists("posts").dropTableIfExists("users");
+  return knex.schema
+    .dropTableIfExists("commentSection")
+    .dropTableIfExists("posts")
+    .dropTableIfExists("users");
 };
