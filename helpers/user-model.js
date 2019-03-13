@@ -5,7 +5,8 @@ module.exports = {
   find,
   findBy,
   findById,
-  getUserPosts
+  getUserPosts,
+  getAllPosts
 };
 
 function find() {
@@ -29,7 +30,12 @@ function findById(id) {
 }
 function getUserPosts(userId) {
   return db("posts as p")
+    .select("p.id", "p.title", "u.username as postedBy")
     .join("users as u", "u.id", "p.user_id")
-    .select("p.id", "p.text", "u.username as postedBy")
     .where("p.user_id", userId);
+}
+function getAllPosts() {
+  return db("posts as p")
+    .select("p.*", "u.username as postedBy")
+    .join("users as u", "u.id", "p.user_id");
 }

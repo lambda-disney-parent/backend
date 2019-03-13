@@ -4,16 +4,16 @@ const router = require("express").Router();
 //Models
 const Users = require("../helpers/user-model");
 const Post = require("../helpers/post-model");
+
 //Middleware
 const { restricted, checkRole } = require("../Auth/middleware");
+
 router.get("/", async (req, res) => {
   try {
-    const posts = await Post.get(req.query);
-    const username = await Users.findById(1);
-    const post = posts.map(p => {
-      return { ...posts, username };
-    });
-    res.status(200).json({ post });
+    //Gets all posts
+    const posts = await Users.getAllPosts();
+    console.log(posts);
+    res.status(200).json(posts);
   } catch (error) {
     res.status(500).json({ message: "Error retrieving the posts" });
   }
