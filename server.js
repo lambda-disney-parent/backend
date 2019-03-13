@@ -18,6 +18,7 @@ const postRouter = require("./routes/postRouter");
 server.use("/api/auth", authRouter);
 server.use("/api/users", usersRouter);
 server.use("/api/posts", postRouter);
+
 //Default Endpoints
 server.get("/", (req, res) => {
   res.send("It works!");

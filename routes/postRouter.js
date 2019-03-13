@@ -8,10 +8,14 @@ const Post = require("../helpers/post-model");
 const { restricted, checkRole } = require("../Auth/middleware");
 router.get("/", async (req, res) => {
   try {
-    const post = await Post.get(req.query);
-    res.status(200).json(post);
+    const posts = await Post.get(req.query);
+    const username = await Users.findById(1);
+    const post = posts.map(p => {
+      return { ...posts, username };
+    });
+    res.status(200).json({ post });
   } catch (error) {
-    res.status(500).json({ message: "Error retrieving the hubs" });
+    res.status(500).json({ message: "Error retrieving the posts" });
   }
 });
 //gets posts related to users
