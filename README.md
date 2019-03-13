@@ -182,6 +182,38 @@ Data sent back
 }
 ```
 
+### Create Post
+
+```
+URL: /api/posts
+TYPE: POST
+--------------
+Data required:
+headers:{
+   Authorization: token
+}
+body: {
+   user_id: int,
+   title: string,
+   meetingPlace: string,
+   time: string,
+   numOfKids: int
+}
+--------------
+Data sent back
+{
+   id: int,
+   title: string,
+   meetingPlace: string,
+   time: string,
+   numOfKids: int,
+   user_id: int,
+   created_at: string,
+   updated_at: string
+}
+
+```
+
 ### Get All Posts
 
 ```
@@ -217,4 +249,132 @@ Data sent back
       ]
    }
 ]
+```
+
+### Get Post by Id
+
+```
+URL: /api/posts/:id
+TYPE: GET
+--------------
+Data required:
+headers:{
+   Authorization: token
+}
+--------------
+Data sent back
+{
+   id: int,
+   title: string,
+   meetingPlace: string,
+   time: string,
+   numOfKids: int,
+   user_id: int,
+   created_at: string,
+   updated_at: string
+}
+```
+
+### Update Post
+
+**You can provide any of the valid fields for a post in the body.**
+
+```
+URL: /api/posts/:id
+TYPE: PUT
+--------------
+Data required:
+headers:{
+   Authorization: token
+}
+body: {
+   any valid field
+}
+--------------
+Data sent back
+{
+   message: Updated user,
+   postInfo: {
+      your data sent in body
+   }
+}
+```
+
+### Delete Post
+
+```
+URL: /api/posts/:id
+TYPE: DELETE
+--------------
+Data required:
+headers:{
+   Authorization: token
+}
+--------------
+No data will be sent back if the post is deleted.
+```
+
+### Add Comment
+
+```
+URL: /api/posts/comment
+TYPE: POST
+--------------
+Data required:
+headers:{
+   Authorization: token
+}
+body: {
+   comment: string,
+   repliedBy: string,
+   post_id: int
+}
+--------------
+Data sent back
+{
+   addedComment: {
+      comment: string,
+      repliedBy: string,
+      post_id: int
+   }
+}
+```
+
+### Update Comment
+
+```
+URL: /api/posts/comment/:id
+TYPE: PUT
+--------------
+Data required:
+headers:{
+   Authorization: token
+}
+body: {
+   comment: string,
+   repliedBy: string
+}
+--------------
+Data sent back
+{
+   message: 'Success!',
+   comment: {
+      comment: string,
+      repliedBy: strng
+   }
+}
+```
+
+### Delete Comment
+
+```
+URL: /api/posts/comment/:id
+TYPE: DELETE
+--------------
+Data required:
+headers:{
+   Authorization: token
+}
+--------------
+No Data will be sent back if successful
 ```
