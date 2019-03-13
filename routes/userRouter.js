@@ -7,7 +7,7 @@ const Users = require("../helpers/user-model");
 const { restricted, checkRole } = require("../Auth/middleware");
 
 //Routes
-router.get("/", restricted, checkRole("owner"), (req, res) => {
+router.get("/", restricted, (req, res) => {
   Users.find()
     .then(users => {
       res.json({ users, decodedToken: req.decodedJwt });
