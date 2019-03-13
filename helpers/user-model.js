@@ -5,8 +5,11 @@ module.exports = {
   find,
   findBy,
   findById,
+  update,
+  remove,
   getUserPosts,
-  getAllPosts
+  getAllPosts,
+  getAllComments
 };
 
 function find() {
@@ -28,6 +31,18 @@ function findById(id) {
     .where({ id })
     .first();
 }
+
+function update(id, changes) {
+  return db("users")
+    .where({ id })
+    .update(changes);
+}
+
+function remove(id) {
+  return db("posts")
+    .where("id", id)
+    .del();
+}
 function getUserPosts(userId) {
   return db("posts as p")
     .select("p.id", "p.title", "u.username as postedBy")
@@ -38,4 +53,9 @@ function getAllPosts() {
   return db("posts as p")
     .select("p.*", "u.username as postedBy")
     .join("users as u", "u.id", "p.user_id");
+}
+function getAllComments() {
+  return db("commentSection as c")
+    .select("c.*")
+    .join("posts as p", "p.id", "c.post_id");
 }

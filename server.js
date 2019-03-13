@@ -13,11 +13,13 @@ server.use(helmet(), express.json(), cors());
 const authRouter = require("./routes/authRouter");
 const usersRouter = require("./routes/userRouter");
 const postRouter = require("./routes/postRouter");
+const commentRouter = require("./routes/commentRouter");
 
 //API Endpoints
 server.use("/api/auth", authRouter);
 server.use("/api/users", usersRouter);
 server.use("/api/posts", postRouter);
+server.use("/api/posts/comment", commentRouter);
 
 //Default Endpoints
 server.get("/", (req, res) => {

@@ -12,18 +12,25 @@ router.get("/", async (req, res) => {
   try {
     //Gets all posts
     const posts = await Users.getAllPosts();
-    console.log(posts);
-    res.status(200).json(posts);
+    const comments = await Users.getAllComments();
+    const mappedPosts = posts.map(p => {
+      const comment = comments.filter(c => c.post_id === p.id);
+
+      return { ...p, comment };
+    });
+
+    res.status(200).json(mappedPosts);
   } catch (error) {
     res.status(500).json({ message: "Error retrieving the posts" });
   }
 });
 //gets posts related to users
 router.get("/:id", async (req, res) => {
-  const posts = await Users.getUserPosts(req.params.id);
+  const post = await Post.getById(req.params.id);
+  console.log(post);
   try {
     if (post) {
-      res.status(200).json(posts);
+      res.status(200).json(post);
     } else {
       res.status(404).json({ message: "Post not found!" });
     }
