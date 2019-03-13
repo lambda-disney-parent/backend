@@ -18,9 +18,9 @@ function getById(id) {
     .first();
 }
 
-function insert(post) {
+function insert(comment) {
   return db("commentSection")
-    .insert(post)
+    .insert(comment)
     .then(ids => {
       return getById(ids[0]);
     });
