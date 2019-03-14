@@ -6,8 +6,13 @@ const express = require("express"),
 //Server to point to
 const server = express();
 
+// Cors Config
+const corsConfig = {
+  credentials: true,
+  origin: true
+};
 //Library Middleware
-server.use(helmet(), express.json(), cors());
+server.use(helmet(), express.json(), cors(corsConfig));
 
 //Routes
 const authRouter = require("./routes/authRouter");
