@@ -5,24 +5,19 @@ const express = require("express"),
 
 //Server to point to
 const server = express();
-
+const allowCrossDomain = function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  next();
+};
 // Cors Config
 const corsConfig = {
   credentials: true,
   origin: true
 };
 //Library Middleware
-server.use(helmet(), express.json(), cors(corsConfig));
-
-server.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Access-Control-Allow-Credentials",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
+server.use(helmet(), express.json(), cors(corsConfig), allowCrossDomain());
 
 //Routes
 const authRouter = require("./routes/authRouter");
