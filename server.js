@@ -14,6 +14,16 @@ const corsConfig = {
 //Library Middleware
 server.use(helmet(), express.json(), cors(corsConfig));
 
+server.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Access-Control-Allow-Credentials",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
+
 //Routes
 const authRouter = require("./routes/authRouter");
 const usersRouter = require("./routes/userRouter");
