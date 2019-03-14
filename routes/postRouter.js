@@ -5,8 +5,12 @@ const router = require("express").Router();
 const Users = require("../helpers/user-model");
 const Post = require("../helpers/post-model");
 const Comment = require("../helpers/comment-model");
+
 //Middleware
 const { restricted, checkRole } = require("../Auth/middleware");
+
+//Twilio
+const { sendMessage } = require("../Twilio/twilio");
 
 router.get("/", async (req, res) => {
   try {
@@ -80,7 +84,8 @@ router.post("/comment", (req, res) => {
   Comment.insert(req.body)
     .then(addedPost => {
       console.log(addedPost);
-      res.status(200).json({ addedComment: req.body });
+      sendMessage();
+      res.status(201).json({ addedComment: req.body });
     })
     .catch(err => {
       console.log(err);
