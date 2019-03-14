@@ -17,7 +17,7 @@ const corsConfig = {
   origin: true
 };
 //Library Middleware
-server.use(helmet(), express.json(), cors(corsConfig), allowCrossDomain());
+server.use(helmet(), express.json(), allowCrossDomain(), cors(corsConfig));
 
 //Routes
 const authRouter = require("./routes/authRouter");
