@@ -12,6 +12,15 @@ const { restricted, checkRole } = require("../Auth/middleware");
 //Twilio
 const { sendMessage } = require("../Twilio/twilio");
 
+router.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
+
 router.get("/", async (req, res) => {
   try {
     //Gets all posts
